@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Name — Portfolio</title>
+  <meta name="description" content="Portfolio — Software Developer / UIUX / Projects" />
+
+  <!-- ====== FONTS ====== -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ====== STYLES ======
+       Single-file CSS for easy copy-paste.
+       Detailed comments below explain each block for other developers.
+  -->
+  <style>
+    /* ======================
+       Root variables (colors, spacing)
+       - Change palette here to adjust look globally.
+       ====================== */
+    :root{
+      --bg: #0e1220;          /* deep navy background */
+      --card: #121421;        /* slightly lighter card bg */
+      --muted: #9aa0b2;       /* muted text */
+      --accent: #ff6b35;      /* coral / orange accent (primary CTA) */
+      --accent-2: #00e6c3;    /* teal secondary accent */
+      --glass: rgba(255,255,255,0.03); /* translucent card */
+      --glass-2: rgba(255,255,255,0.02);
+      --radius: 14px;
+      --max-width: 1100px;
+      --shadow: 0 10px 30px rgba(2,6,23,0.6);
+      --trans: 300ms;
+      --mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    /* ======================
+       Base styles (resets + typography)
+       ====================== */
+    *{box-sizing: border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--mono);
+      background: radial-gradient(circle at 10% 10%, rgba(255,107,53,0.04), transparent 6%),
+                  radial-gradient(circle at 90% 90%, rgba(0,230,195,0.03), transparent 6%),
+                  var(--bg);
+      color: #e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding: 36px 20px;
+      display:flex;
+      justify-content:center;
+    }
+
+    /* Container centers everything */
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      margin:0 auto;
+    }
+
+    /* ======================
+       Top Navigation
+       - sticky at top for UX
+       ====================== */
+    header.site-header{
+      position: sticky;
+      top: 18px;
+      z-index: 50;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      padding: 8px 12px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 6px 20px rgba(2,6,23,0.45);
+      margin-bottom: 24px;
+    }
+
+    header .nav{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      justify-content:space-between;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .brand .logo{
+      width:46px;
+      height:46px;
+      border-radius:10px;
+      background:linear-gradient(135deg,var(--accent), #ff9a6a);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      color:#08101a;
+      box-shadow: 0 6px 18px rgba(255,107,53,0.12);
+    }
+    .brand h1{
+      font-size:16px;
+      margin:0;
+      letter-spacing:0.2px;
+      font-weight:700;
+      color: #f8fafc;
+    }
+
+    nav.primary{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    nav.primary a{
+      color:var(--muted);
+      text-decoration:none;
+      font-weight:600;
+      padding:8px 10px;
+      border-radius:8px;
+      transition: all var(--trans) ease;
+      font-size:14px;
+    }
+    nav.primary a:hover{
+      color:#fff;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+    }
+    .cta{
+      background: linear-gradient(90deg,var(--accent), #ff8a63);
+      color:#08101a;
+      padding:9px 14px;
+      border-radius:12px;
+      box-shadow: 0 8px 24px rgba(255,107,53,0.12);
+      text-decoration:none;
+      font-weight:700;
+      transition: transform var(--trans);
+    }
+    .cta:hover{ transform: translateY(-3px); }
+
+    /* ======================
+       Main layout grid (Hero + Side)
+       - Left: Hero text & secondary nav
+       - Right: Profile card (image)
+       ====================== */
+    main{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:28px;
+      align-items:start;
+      min-height:70vh;
+    }
+
+    /* HERO - Left column */
+    .hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      padding:26px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+    .hero .eyebrow{ color:var(--muted); font-weight:600; font-size:13px; margin-bottom:8px; }
+    .hero h2{
+      margin:0 0 8px 0;
+      font-size:34px;
+      line-height:1.05;
+      letter-spacing:-0.6px;
+    }
+    .hero h3{
+      margin:0 0 14px 0;
+      color:var(--accent-2);
+      font-weight:700;
+      font-size:20px;
+    }
+    .hero p.lead{
+      color:var(--muted);
+      font-size:15px;
+      margin-bottom:18px;
+      max-width:70%;
+    }
+
+    .hero .actions{ display:flex; gap:12px; align-items:center; margin-bottom:18px; }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:700;
+      cursor:pointer;
+      border: none;
+    }
+    .btn-ghost{
+      background:transparent;
+      color:var(--muted);
+      border: 1px solid rgba(255,255,255,0.03);
+      padding:9px 12px;
+    }
+    .btn-primary{
+      background: linear-gradient(90deg,var(--accent), #ff8a63);
+      color:#08101a;
+      box-shadow: 0 8px 30px rgba(255,107,53,0.12);
+    }
+
+    /* small quick stats row */
+    .stats{
+      display:flex;
+      gap:14px;
+      margin-top:16px;
+    }
+    .stat{
+      background:var(--glass);
+      padding:12px 14px;
+      border-radius:10px;
+      display:flex;
+      flex-direction:column;
+      min-width:100px;
+      align-items:flex-start;
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+    .stat strong{ font-size:18px; display:block; }
+    .stat span{ color:var(--muted); font-size:13px; }
+
+    /* ======================
+       Profile Card (Right column)
+       - circular avatar with neon ring and subtle shadow
+       ====================== */
+    .profile-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      padding:20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.02);
+      text-align:center;
+    }
+
+    /* Avatar ring */
+    .avatar{
+      width:220px;
+      height:220px;
+      margin:8px auto 14px;
+      border-radius:50%;
+      background: linear-gradient(135deg, rgba(255,107,53,0.12), rgba(0,230,195,0.05));
+      display:grid;
+      place-items:center;
+      position:relative;
+      overflow:visible;
+    }
+    .avatar img{
+      width:200px;
+      height:200px;
+      border-radius:50%;
+      object-fit:cover;
+      border:6px solid rgba(10,12,18,0.65);
+      box-shadow: 0 12px 40px rgba(2,6,23,0.7);
+      transform: translateZ(0);
+    }
+    /* subtle animated ring (CSS only) */
+    .avatar::after{
+      content:"";
+      position:absolute;
+      inset: -8px;
+      border-radius:50%;
+      background: conic-gradient(from 120deg, rgba(255,107,53,0.18), rgba(0,230,195,0.12), transparent 50%);
+      filter: blur(18px);
+      opacity:0.9;
+      animation: spin 12s linear infinite;
+      z-index:-1;
+    }
+    @keyframes spin {
+      from{ transform: rotate(0deg) }
+      to{ transform: rotate(360deg) }
+    }
+    .profile-card h3{ margin:8px 0 4px; font-size:18px; }
+    .profile-card p{ color:var(--muted); margin:0; font-size:14px; }
+
+    /* small tag list */
+    .tags{ display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; }
+    .tag{
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+      padding:7px 12px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:13px;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.02);
+    }
+
+    /* ======================
+       About Section
+       ====================== */
+    section.about{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:22px;
+    }
+    .about .card{
+      background: var(--card);
+      padding:22px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02);
+      box-shadow: 0 18px 40px rgba(2,6,23,0.45);
+    }
+    .about .card h3{ margin-top:0;}
+    .about .facts{ display:flex; gap:14px; margin-top:16px; flex-wrap:wrap; }
+    .fact{
+      background:var(--glass-2);
+      padding:12px;
+      border-radius:10px;
+      min-width:120px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .fact strong{ display:block; font-size:18px; }
+    .fact span{ color:var(--muted); font-size:13px; }
+
+    /* ======================
+       Projects Section
+       - important: each project contains GitHub + Live Demo links.
+       - Replace demo URLs with real ones.
+       ====================== */
+    section.projects{
+      margin-top:24px;
+    }
+    .projects-grid{
+      display:grid;
+      grid-template-columns: repeat(2,1fr);
+      gap:18px;
+    }
+    .project-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      padding:18px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02);
+      transition: transform var(--trans), box-shadow var(--trans);
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+    .project-card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(2,6,23,0.6);
+    }
+    .project-thumb{
+      width:88px;
+      height:70px;
+      border-radius:10px;
+      overflow:hidden;
+      display:block;
+      flex:0 0 88px;
+      background: linear-gradient(135deg,var(--accent), var(--accent-2));
+    }
+    .project-info h4{ margin:0; font-size:16px; }
+    .project-info p{ color:var(--muted); margin:6px 0 10px; font-size:13px; max-width:360px; }
+    .project-links{ display:flex; gap:8px; }
+
+    /* small icon style */
+    .link-btn{
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:8px;
+      text-decoration:none;
+      color:#08101a;
+      background:linear-gradient(90deg,var(--accent), #ff8a63);
+      font-weight:700;
+    }
+    .link-btn.ghost{
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    /* ======================
+       Contact Section
+       ====================== */
+    section.contact{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:18px;
+      align-items:start;
+    }
+    .contact .form{
+      background:var(--card);
+      padding:18px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.02);
+    }
+    .form input, .form textarea{
+      width:100%;
+      padding:12px;
+      border-radius:10px;
+      border: 1px solid rgba(255,255,255,0.03);
+      background:transparent;
+      color: #e9f1ff;
+      resize:vertical;
+      margin-bottom:12px;
+      font-size:14px;
+    }
+    .form label{ font-size:13px; color:var(--muted); font-weight:700; display:block; margin-bottom:6px; }
+
+    /* ======================
+       Footer
+       ====================== */
+    footer{
+      margin-top:30px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      padding:26px 12px;
+    }
+
+    /* ======================
+       Responsive
+       - Reflow to single-column on small screens
+       ====================== */
+    @media (max-width:980px){
+      main{ grid-template-columns: 1fr; }
+      section.about{ grid-template-columns: 1fr; }
+      section.contact{ grid-template-columns: 1fr; }
+      .projects-grid{ grid-template-columns: 1fr; }
+      .hero p.lead{ max-width:100%;}
+    }
+
+    @media (max-width:520px){
+      body{ padding:18px 12px; }
+      .avatar{ width:160px; height:160px; }
+      .avatar img{ width:140px; height:140px; border-width:5px;}
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- ======================
+         Header / Navigation
+         - developer comments included for readability
+         ====================== -->
+    <header class="site-header">
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">YP</div>
+          <div>
+            <h1>Your Name</h1>
+            <div style="font-size:12px;color:var(--muted)">Software Developer • Product-minded</div>
+          </div>
+        </div>
+
+        <nav class="primary" aria-label="Primary Navigation">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <!-- LinkedIn page link opens in new tab; replace with your profile -->
+          <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="cta">LinkedIn</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ======================
+         Main content grid
+         - left: hero + details
+         - right: profile card (avatar)
+         ====================== -->
+    <main id="home">
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="eyebrow">Hello. I'm</div>
+        <h2 id="hero-heading">Your Name</h2>
+        <h3>Software Developer & UI/UX Enthusiast</h3>
+        <p class="lead">I build polished web and mobile experiences. I enjoy turning complex problems into elegant, accessible solutions — and crafting UI that people enjoy using.</p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-ghost" href="mailto:youremail@example.com">Contact Me</a>
+        </div>
+
+        <div class="stats" aria-hidden="true">
+          <div class="stat"><strong>120+</strong><span>Projects (personal & client)</span></div>
+          <div class="stat"><strong>95%</strong><span>Client Satisfaction</span></div>
+          <div class="stat"><strong>10+</strong><span>Years Experience</span></div>
+        </div>
+      </section>
+
+      <!-- PROFILE CARD -->
+      <aside class="profile-card" aria-label="Profile Card">
+        <!--
+          Profile picture / avatar
+          - Replace the img src with your photo.
+          - Recommended size: square, 800x800, then it will be cropped to circle.
+        -->
+        <div class="avatar" role="img" aria-label="Profile picture of Your Name">
+          <img src="https://via.placeholder.com/800x800.png?text=Your+Photo" alt="Your Name">
+        </div>
+        <h3>Your Name</h3>
+        <p>Full-stack & Mobile Developer</p>
+
+        <div class="tags" aria-hidden="true">
+          <div class="tag">React</div>
+          <div class="tag">React Native</div>
+          <div class="tag">Node.js</div>
+          <div class="tag">Figma</div>
+        </div>
+
+      </aside>
+    </main>
+
+    <!-- ======================
+         About section
+         - left: detailed about + experience
+         - right: quick facts / skills
+         ====================== -->
+    <section id="about" class="about" aria-labelledby="about-heading">
+      <div class="card">
+        <h3 id="about-heading">About me</h3>
+        <p style="color:var(--muted);font-size:15px;">
+          I'm a product-focused developer who cares about performance and delightful UI. I enjoy collaborating with designers and product teams to ship features end-to-end.
+        </p>
+        <p style="color:var(--muted);font-size:15px;">
+          I mainly work with React, React Native and Node.js. I build components, optimize apps for performance, and ensure accessibility best practices.
+        </p>
+
+        <div class="facts">
+          <div class="fact"><strong>100+</strong><span>Production Deploys</span></div>
+          <div class="fact"><strong>50+</strong><span>Open-source commits</span></div>
+          <div class="fact"><strong>8</strong><span>Tech Certifications</span></div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <a class="btn btn-primary" href="#projects">See my work</a>
+          <a class="btn btn-ghost" href="https://your-resume-link.example.com" target="_blank" rel="noopener">Download CV</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Skills & Tools</h3>
+        <ul style="color:var(--muted); padding-left:18px; margin-top:8px;">
+          <li>React / Next.js / React Native</li>
+          <li>Node.js, Express, REST & GraphQL</li>
+          <li>MongoDB / Firebase</li>
+          <li>Figma, UI prototyping & accessibility</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ======================
+         Projects section
+         - 4 demo projects with GitHub + Live links
+         - Replace each URL and description with your real projects
+         ====================== -->
+    <section id="projects" class="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading" style="margin-bottom:12px">Projects</h2>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <article class="project-card" aria-labelledby="p1">
+          <div class="project-thumb" aria-hidden="true">
+            <!-- optional: replace with project's screenshot -->
+          </div>
+          <div class="project-info">
+            <h4 id="p1">E-commerce UI Kit</h4>
+            <p>High-fidelity React + Tailwind e-commerce UI kit with product pages, cart and checkout mock (Stripe test).</p>
+            <div class="project-links">
+              <a class="link-btn" href="https://github.com/username/ecommerce-ui" target="_blank" rel="noopener">GitHub</a>
+              <a class="link-btn ghost" href="https://example.com/ecommerce-ui" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card" aria-labelledby="p2">
+          <div class="project-thumb" aria-hidden="true"></div>
+          <div class="project-info">
+            <h4 id="p2">Mobile Task Manager</h4>
+            <p>React Native app with offline-first syncing and push notifications. Includes onboarding and gestures.</p>
+            <div class="project-links">
+              <a class="link-btn" href="https://github.com/username/task-manager" target="_blank" rel="noopener">GitHub</a>
+              <a class="link-btn ghost" href="https://example.com/task-manager" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card" aria-labelledby="p3">
+          <div class="project-thumb" aria-hidden="true"></div>
+          <div class="project-info">
+            <h4 id="p3">Analytics Dashboard</h4>
+            <p>Interactive dashboard built with React + Recharts. Dynamic filters and CSV export for insights.</p>
+            <div class="project-links">
+              <a class="link-btn" href="https://github.com/username/analytics-dashboard" target="_blank" rel="noopener">GitHub</a>
+              <a class="link-btn ghost" href="https://example.com/analytics-dashboard" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card" aria-labelledby="p4">
+          <div class="project-thumb" aria-hidden="true"></div>
+          <div class="project-info">
+            <h4 id="p4">AI Music Companion (Demo)</h4>
+            <p>Prototype app that detects song type and suggests instrumental accompaniment with a small ML pipeline.</p>
+            <div class="project-links">
+              <a class="link-btn" href="https://github.com/username/ai-music" target="_blank" rel="noopener">GitHub</a>
+              <a class="link-btn ghost" href="https://example.com/ai-music" target="_blank" rel="noopener">Live Demo</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Add new project CTA -->
+      <div style="margin-top:16px;">
+        <a class="btn btn-ghost" href="https://github.com/username" target="_blank" rel="noopener">See more on GitHub</a>
+      </div>
+    </section>
+
+    <!-- ======================
+         Contact section
+         - The contact form uses mailto fallback.
+         - You can connect to a backend for real form submission later.
+         ====================== -->
+    <section id="contact" class="contact" aria-labelledby="contact-heading">
+      <div class="form">
+        <h3 id="contact-heading">Let's talk</h3>
+        <p style="color:var(--muted);">Interested in working together? Fill the form or send an email directly.</p>
+
+        <!-- Note: this simple form uses mailto in JS (no backend). Replace with real endpoint as needed. -->
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+          <label for="name">Name</label>
+          <input id="name" name="name" required placeholder="Your full name">
+
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com">
+
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required placeholder="Tell me about the project..."></textarea>
+
+          <button type="submit" class="btn btn-primary">Send message</button>
+        </form>
+      </div>
+
+      <aside class="card" style="text-align:left;">
+        <h3>Contact details</h3>
+        <p style="color:var(--muted)">Email: <a href="mailto:youremail@example.com" style="color:var(--accent-2)">youremail@example.com</a></p>
+        <p style="color:var(--muted)">Location: Bangalore, India</p>
+        <p style="color:var(--muted)">Open to remote & hybrid roles</p>
+
+        <div style="margin-top:12px;">
+          <a class="btn link-btn" href="https://github.com/username" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn link-btn ghost" href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ======================
+         Footer
+         ====================== -->
+    <footer>
+      <div>Made with ❤️ — Rajkumar Pandey • © <span id="year"></span></div>
+    </footer>
+
+  </div>
+
+  <script>
+  async function handleFormSubmit(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !message) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("✅ Message sent successfully!");
+        document.getElementById("contactForm").reset();
+      } else {
+        alert("❌ " + data.error);
+      }
+    } catch (err) {
+      alert("⚠️ Something went wrong. Try again later.");
+    }
+  }
+</script>
+</body>
+</html>
